@@ -27,7 +27,7 @@ class megaraid::install {
     ensure  => present,
     mode    => '0755',
     source  => 'puppet:///modules/megaraid/check_megaraid_sas',
-    require => Package['megacli'],
+    require => [Package['megacli'], Class['nrpe::install']]
   }
 
 }

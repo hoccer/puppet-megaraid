@@ -4,11 +4,17 @@ class megaraid::install {
     ensure  => present,
     content => 'deb http://hwraid.le-vert.net/debian wheezy main
 ',
-    notify  => Exec['apt-update'],
+    notify  => Exec['apt-key-add'],
+  }
+
+  exec { 'apt-key-add':
+    command     => '/usr/bin/wget -O - http://hwraid.le-vert.net/debian/hwraid.le-vert.net.gpg.key | /usr/bin/sudo apt-key add -',
+    refreshonly => true,
+    notify      => Exec['apt-update'],
   }
 
   exec { 'apt-update':
-    command => '/usr/bin/apt-get update',
+    command     => '/usr/bin/apt-get update',
     refreshonly => true,
   }
 
